@@ -1,0 +1,5 @@
+# Sidebar navigation
+- label: Home
+  link: /
+- label: Risk 
+  link: /risk

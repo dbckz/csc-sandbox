@@ -1,0 +1,112 @@
+name: Preview Site
+
+on:
+  push:
+    branches-ignore:
+      - master
+    paths:
+      - 'src/**'
+      - '.github/workflows/site-preview.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create deployment
+        id: deployment
+        run: |
+          echo "Creating deployment for ref: $GITHUB_REF"
+          API_RESPONSE=$(curl -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token ${{ github.token }}" -X POST -H 'Content-Type: application/json' -d '{"ref": "'"$GITHUB_REF"'", "environment": "preview", "transient_environment": true, "description": "Pages preview", "required_contexts": [], "auto_merge": false}' "https://api.github.com/repos/$GITHUB_REPOSITORY/deployments")
+          STATUSES_URL=$(echo $API_RESPONSE | jq .statuses_url)
+          if [ "${STATUSES_URL}" = "null" ]; then echo "Invalid Statuses URL, stop here to avoid issues further down."; echo $API_RESPONSE | jq . ; exit 1; fi
+          echo "::set-output name=statuses_url::$STATUSES_URL"
+
+      - name: Cache Python
+        id: cache-python
+        uses: actions/cache@v2
+        with:
+          path: |
+            src/venv
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}-${{ hashFiles('**/src/helpers/**') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+          architecture: 'x64'
+
+      - name: Setup Virtualenv
+        run: |
+          python3 -m pip install --upgrade pip virtualenv
+          virtualenv src/venv
+
+      - name: Install dependencies
+        working-directory: src/
+        run: |
+          source venv/bin/activate
+          make preinstall
+          make install
+          make install-pipeline
+
+      - name: Build Plots
+        working-directory: src/
+        run: |
+          source venv/bin/activate
+          make -j $(nproc) figures
+
+      - name: Cache Node
+        id: cache-node
+        uses: actions/cache@v2
+        with:
+          path: |
+            src/site/node_modules
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-node-${{ hashFiles('**/src/site/package*json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install Node dependencies
+        working-directory: src/site
+        run: npm install
+
+      - name: Modify Path for Preview
+        working-directory: src/site
+        run: |
+          sed -i 's|pathPrefix: .*,|pathPrefix: '"'/$GITHUB_SHA'",'|' gatsby-config.js
+
+      - name: Build Site
+        working-directory: src/site
+        run: |
+          npm run-script build
+
+      - name: Update deployment status (in_progress)
+        run: |
+          curl -H "Accept: application/vnd.github.flash-preview+json" -H "Authorization: token ${{ github.token }}" -X POST -H 'Content-Type: application/json' -d '{"state": "in_progress"}' ${{ steps.deployment.outputs.statuses_url }}
+
+      - name: Upload S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          python3 -m pip install awscli
+          aws s3 sync --delete src/site/public s3://${{ secrets.AWS_DOCS_PREVIEW_BUCKET }}/${{ github.sha }}/
+
+      - name: Update deployment status (success)
+        if: success()
+        run: |
+          curl -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token ${{ github.token }}" -X POST -H 'Content-Type: application/json' -d '{"state": "success", "environment_url": "'"http://${{ secrets.AWS_DOCS_PREVIEW_BUCKET }}.s3-website.${{ secrets.AWS_DOCS_PREVIEW_BUCKET_REGION }}.amazonaws.com/${{ github.sha }}/"'"}' ${{ steps.deployment.outputs.statuses_url }}
+
+      - name: Update deployment status (failure)
+        if: failure()
+        run: |
+          curl -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token ${{ github.token }}" -X POST -H 'Content-Type: application/json' -d '{"state": "failure"}' ${{ steps.deployment.outputs.statuses_url }}

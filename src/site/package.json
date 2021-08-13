@@ -1,0 +1,54 @@
+{
+  "name": "dbckz-csc",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CSC",
+  "author": "dbckz",
+  "starter-name": "gatsby-starter-rocket-docs",
+  "dependencies": {
+    "@rocketseat/gatsby-theme-docs": "^2.1.1",
+    "d3-mitch-tree": "^1.1.2",
+    "gatsby": "^2.19.10",
+    "gatsby-plugin-canonical-urls": "^2.1.19",
+    "gatsby-plugin-gdpr-tracking": "^1.1.1",
+    "gatsby-plugin-manifest": "^2.2.37",
+    "gatsby-plugin-offline": "^3.0.32",
+    "gatsby-plugin-sitemap": "^2.2.26",
+    "plotly.js": "^1.54.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-accessible-accordion": "^3.0.1",
+    "react-cookie-consent": "^5.1.2",
+    "react-dom": "^16.12.0",
+    "react-icons": "^3.10.0",
+    "react-loadable": "^5.5.0",
+    "react-loader-spinner": "^3.1.14",
+    "react-plotly.js": "^2.4.0",
+    "react-table": "^7.6.3",
+    "survey-react": "^1.8.31"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
+  },
+  "keywords": [
+    "pets",
+    "privacy",
+    "dbckz"
+  ],
+  "scripts": {
+    "build": "gatsby build --prefix-paths",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{css,js,jsx,md,mdx}\"",
+    "format-check": "prettier --check \"**/*.{css,js,jsx,md,mdx}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve --prefix-paths",
+    "clean": "gatsby clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbckz/csc-sandbox"
+  },
+  "bugs": {
+    "url": "https://github.com/dbckz/csc-sandbox/issues"
+  }
+}
