@@ -330,7 +330,9 @@ export default class Sy extends React.Component {
   }
 
   render() {
-    Survey.StylesManager.applyTheme("modern")
+    if (typeof window !== `undefined`) {
+      Survey.StylesManager.applyTheme("modern")
+    }
 
     var surveyRender = !this.state.isCompleted ? (
       <Survey.Survey
