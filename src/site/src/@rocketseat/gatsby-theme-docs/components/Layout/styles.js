@@ -27,7 +27,7 @@ export const Main = styled.main`
 export const Children = styled.div`
   width: 100%;
   min-width: 75%;
-  max-width: 75%;
+  max-width: 90%;
 
   @media (max-width: 1200px) {
     min-width: 100%;
