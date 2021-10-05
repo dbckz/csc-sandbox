@@ -1,23 +1,17 @@
 import React from "react"
-import Output from "./output"
 import * as Survey from "survey-react"
 
 import "./sy.css"
 
-export default class Sy extends React.Component {
+export default class Sy1 extends React.Component {
   constructor(props) {
     super(props)
     this.state = { isCompleted: false }
     this.onCompleteComponent = this.onCompleteComponent.bind(this)
-    this.tmp = ["one", "two", "three"]
   }
 
   onCompleteComponent() {
     this.setState({ isCompleted: true })
-  }
-
-  onAnswer() {
-    this.themesToHighlight.push("TEST")
   }
 
   json = {
@@ -28,7 +22,7 @@ export default class Sy extends React.Component {
         name: "Novelty",
         elements: [
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question1",
             title:
               "Does your local authority have previous experience of deploying similar tools in the past?",
@@ -36,27 +30,32 @@ export default class Sy extends React.Component {
             choices: [
               {
                 value: "item1",
-                text:
-                  "Yes, similar tools have been deployed in the past, and there is good evidence that the tools were effective.",
+                text: "No similar tools have been deployed in the past.",
               },
               {
                 value: "item2",
                 text:
-                  "Yes, similar tools have been deployed in the past, but there is little evidence that the tools were effective.",
+                  "You do not know if similar tools have been deployed in the past.",
               },
               {
                 value: "item3",
-                text: "No similar tools have been deployed in the past.",
+                text:
+                  "Similar tools have been deployed in the past, but there is little or no evidence that the tools were effective.",
               },
               {
                 value: "item4",
                 text:
-                  "You do not know if similar tools have been deployed in the past.",
+                  "Similar tools have been deployed in the past, and there is evidence that they were ineffective or lead to negative outcomes.",
+              },
+              {
+                value: "item5",
+                text:
+                  "Similar tools have been deployed in the past, but there is little knowledge of how decisions were made during the tool’s development and deployment due to a lack of documentation, and staff that worked on the tool having moved on.",
               },
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question2",
             title:
               "Have similar tools been deployed by other local authorities in the past? Is there evidence they were effective?",
@@ -85,7 +84,7 @@ export default class Sy extends React.Component {
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question4",
             title:
               "When similar tools have been deployed in the past, have they provoked any controversy, for example drawing criticism from the public, media, or civil society groups?",
@@ -114,7 +113,7 @@ export default class Sy extends React.Component {
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question5",
             title:
               "Do the intended users of the tool have experience using similar tools? If so, what was their experience of using those tools?",
@@ -149,7 +148,7 @@ export default class Sy extends React.Component {
         name: "Data and Tech",
         elements: [
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question6",
             title:
               "Where similar tools have been deployed in the past, to what extent has algorithmic bias that could adversely impact certain groups been assessed?",
@@ -178,7 +177,7 @@ export default class Sy extends React.Component {
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question7",
             title:
               "Is it likely that certain groups could be over- or under-represented in the data used to develop the tool? For example, are there historical trends or practices that mean certain demographic groups are absent from the dataset, or, conversely, make up the majority of individuals in the dataset? You should also consider whether there are variables in the dataset that could be used as proxies for protected characteristics.",
@@ -200,7 +199,7 @@ export default class Sy extends React.Component {
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question8",
             title:
               "Do you have a good understanding of the quality of the data that will be used to develop the tool? This includes data held by the LA, and data provided by external partners. If so, are you confident that the data quality is sufficient for the tool to perform as expected?",
@@ -228,7 +227,7 @@ export default class Sy extends React.Component {
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question9",
             title:
               "Which of these best describes the expected volume of data that will be required to make the tool effective?",
@@ -253,7 +252,7 @@ export default class Sy extends React.Component {
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question10",
             title:
               "How sensitive is the data required to develop and use the tool?",
@@ -282,7 +281,7 @@ export default class Sy extends React.Component {
         name: "Impact",
         elements: [
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question11",
             title:
               "What is the intended scope of individuals who could be directly affected by its use?",
@@ -306,7 +305,7 @@ export default class Sy extends React.Component {
             ],
           },
           {
-            type: "radiogroup",
+            type: "checkbox",
             name: "question12",
             title:
               "Which of the following best describes how the tool sits alongside human decision-making?",
@@ -347,39 +346,30 @@ export default class Sy extends React.Component {
         onComplete={this.onCompleteComponent}
       />
     ) : null
-
-    // var themesToHighlight = this.state.isCompleted ? (
-    //   document.querySelector('#surveyResult')
-    // ) : null
-
-    // if (this.state.isCompleted) {
-    //   console.log("HERE")
-    //   console.log(themesToHighlight)
-    //   // console.log(this.document.querySelector('#surveyResult'))
-    //   console.log(document.querySelector('#surveyResult'))
-    //   // console.log(survey.data)
-    // }
-
     var onCompleteComponent = this.state.isCompleted ? (
-      <Output themes="test" />
-    ) : // <div>
-    //   Based on your responses to the triage questions, you should pay
-    //   particular attention to the following key themes when developing and
-    //   deployed your data analytics tool:
-    //   <ul>
-    //     <li>Data quality</li>
-    //     <li>Governance and oversight</li>
-    //   </ul>
-    //   Record these in Box X on page Y of the guidance. You should read the
-    //   corresponding explainers before continuing to the design phase.
-
-    // </div>
-    null
+      <div>
+        Based on your responses to the triage questions, you should pay
+        particular attention to the following key themes when developing and
+        deployed your data analytics tool:
+        <ul>
+          <li>Data quality</li>
+          <li>Governance and oversight</li>
+        </ul>
+        Record these in Box X on page Y of the guidance. You should read the
+        corresponding explainers before continuing to the design phase.
+      </div>
+    ) : null
     return (
       <div>
         {surveyRender}
         {onCompleteComponent}
       </div>
     )
+
+    // this.onCompleteComponent = this.state.isCompleted ? (
+    //   <div>Here</div>
+    // ) : null
+
+    // return <Survey.Survey json={this.json} showCompletedPage={false} onComplete={this.onCompleteComponent} />
   }
 }

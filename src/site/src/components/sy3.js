@@ -1,23 +1,17 @@
 import React from "react"
-import Output from "./output"
 import * as Survey from "survey-react"
 
 import "./sy.css"
 
-export default class Sy extends React.Component {
+export default class Sy3 extends React.Component {
   constructor(props) {
     super(props)
     this.state = { isCompleted: false }
     this.onCompleteComponent = this.onCompleteComponent.bind(this)
-    this.tmp = ["one", "two", "three"]
   }
 
   onCompleteComponent() {
     this.setState({ isCompleted: true })
-  }
-
-  onAnswer() {
-    this.themesToHighlight.push("TEST")
   }
 
   json = {
@@ -347,39 +341,30 @@ export default class Sy extends React.Component {
         onComplete={this.onCompleteComponent}
       />
     ) : null
-
-    // var themesToHighlight = this.state.isCompleted ? (
-    //   document.querySelector('#surveyResult')
-    // ) : null
-
-    // if (this.state.isCompleted) {
-    //   console.log("HERE")
-    //   console.log(themesToHighlight)
-    //   // console.log(this.document.querySelector('#surveyResult'))
-    //   console.log(document.querySelector('#surveyResult'))
-    //   // console.log(survey.data)
-    // }
-
     var onCompleteComponent = this.state.isCompleted ? (
-      <Output themes="test" />
-    ) : // <div>
-    //   Based on your responses to the triage questions, you should pay
-    //   particular attention to the following key themes when developing and
-    //   deployed your data analytics tool:
-    //   <ul>
-    //     <li>Data quality</li>
-    //     <li>Governance and oversight</li>
-    //   </ul>
-    //   Record these in Box X on page Y of the guidance. You should read the
-    //   corresponding explainers before continuing to the design phase.
-
-    // </div>
-    null
+      <div>
+        Based on your responses to the triage questions, you should pay
+        particular attention to the following key themes when developing and
+        deployed your data analytics tool:
+        <ul>
+          <li>Data quality</li>
+          <li>Governance and oversight</li>
+        </ul>
+        Record these in Box X on page Y of the guidance. You should read the
+        corresponding explainers before continuing to the design phase.
+      </div>
+    ) : null
     return (
       <div>
         {surveyRender}
         {onCompleteComponent}
       </div>
     )
+
+    // this.onCompleteComponent = this.state.isCompleted ? (
+    //   <div>Here</div>
+    // ) : null
+
+    // return <Survey.Survey json={this.json} showCompletedPage={false} onComplete={this.onCompleteComponent} />
   }
 }
