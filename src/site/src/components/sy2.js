@@ -31,7 +31,8 @@ export default class Sy2 extends React.Component {
           {
             type: "comment",
             name: "question1_comment",
-            title: "Please expand...",
+            title:
+              "Please provide details of similar tools previously deployed by the local authority.",
           },
           {
             type: "boolean",
@@ -43,7 +44,8 @@ export default class Sy2 extends React.Component {
           {
             type: "comment",
             name: "question1_opt_comment",
-            title: "Please expand...",
+            title:
+              "Please describe what evidence there is for effectiveness of previously deployed tools.",
             visibleIf: "{question1}=true",
           },
           {
@@ -57,7 +59,8 @@ export default class Sy2 extends React.Component {
           {
             type: "comment",
             name: "question2_comment",
-            title: "Please expand...",
+            title:
+              "Please provide any details of similar tools previously deployed by other local authorities.",
             visibleIf: "{question1}=false",
           },
           {
@@ -70,7 +73,8 @@ export default class Sy2 extends React.Component {
           {
             type: "comment",
             name: "question2_opt_comment",
-            title: "Please expand...",
+            title:
+              "Please describe what evidence you are aware of for the effectiveness of similar tools deployed by other local authorities.",
             visibleIf: "{question2}=true",
           },
           {
@@ -84,7 +88,7 @@ export default class Sy2 extends React.Component {
           {
             type: "comment",
             name: "question4_comment",
-            title: "Please expand...",
+            title: "Please provide details of any past controversies.",
             visibleIf: "{question1}=true or {question2}=true",
           },
         ],
