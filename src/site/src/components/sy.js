@@ -25,6 +25,28 @@ export default class Sy extends React.Component {
     progressBarType: "buttons",
     pages: [
       {
+        name: "Use case",
+        title: "Section 0: Use case",
+        elements: [
+          {
+            type: "checkbox",
+            name: "question0",
+            title: "Does your proposed use case include any of the following?",
+            choices: [
+              {
+                value: "item1",
+                text: "Fully automated decision-making",
+              },
+              {
+                value: "item2",
+                text:
+                  "Making predictions about, or assigning a risk-score to, individual children or families",
+              },
+            ],
+          },
+        ],
+      },
+      {
         name: "Novelty",
         elements: [
           {
