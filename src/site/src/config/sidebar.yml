@@ -1,7 +1,7 @@
 # Sidebar navigation
 - label: Data analytics ethics triage
   link: /
-- label: Options
+- label: Input options
   items:
     - label: Option 0
       link: /option-0
@@ -9,3 +9,11 @@
       link: /option-1
     - label: Option 2
       link: /option-2
+- label: Output options
+  items:
+    - label: Option 0
+      link: /output/option-0
+    - label: Option 1
+      link: /output/option-1
+    - label: Option 2
+      link: /output/option-2
