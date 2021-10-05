@@ -10,9 +10,13 @@ export default class Sy extends React.Component {
     this.state = { isCompleted: false }
     this.onCompleteComponent = this.onCompleteComponent.bind(this)
     this.tmp = ["one", "two", "three"]
+    this.outputData = null
   }
 
-  onCompleteComponent() {
+  onCompleteComponent(result) {
+    // Questions: JSON.stringify(this.json, null, 3)
+    // Answers: JSON.stringify(result.data, null, 3)
+    this.outputData = JSON.stringify(result.data, null, 3)
     this.setState({ isCompleted: true })
   }
 
@@ -43,6 +47,11 @@ export default class Sy extends React.Component {
                   "Making predictions about, or assigning a risk-score to, individual children or families",
               },
             ],
+          },
+          {
+            type: "comment",
+            name: "question324",
+            title: "TEST",
           },
         ],
       },
@@ -370,33 +379,10 @@ export default class Sy extends React.Component {
       />
     ) : null
 
-    // var themesToHighlight = this.state.isCompleted ? (
-    //   document.querySelector('#surveyResult')
-    // ) : null
-
-    // if (this.state.isCompleted) {
-    //   console.log("HERE")
-    //   console.log(themesToHighlight)
-    //   // console.log(this.document.querySelector('#surveyResult'))
-    //   console.log(document.querySelector('#surveyResult'))
-    //   // console.log(survey.data)
-    // }
-
     var onCompleteComponent = this.state.isCompleted ? (
-      <Output themes="test" />
-    ) : // <div>
-    //   Based on your responses to the triage questions, you should pay
-    //   particular attention to the following key themes when developing and
-    //   deployed your data analytics tool:
-    //   <ul>
-    //     <li>Data quality</li>
-    //     <li>Governance and oversight</li>
-    //   </ul>
-    //   Record these in Box X on page Y of the guidance. You should read the
-    //   corresponding explainers before continuing to the design phase.
+      <Output themes={this.outputData} />
+    ) : null
 
-    // </div>
-    null
     return (
       <div>
         {surveyRender}
