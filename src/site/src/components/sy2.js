@@ -34,94 +34,80 @@ export default class Sy2 extends React.Component {
             title: "Please expand...",
           },
           {
-            type: "radiogroup",
-            name: "question2",
-            title:
-              "Have similar tools been deployed by other local authorities in the past? Is there evidence they were effective?",
+            type: "boolean",
+            name: "question1_opt",
+            title: "Is there good evidence that those tools were effective?",
             isRequired: true,
-            choices: [
-              {
-                value: "item2",
-                text:
-                  "Yes, similar tools have been implemented in other local authorities, but with limited evidence of their effectiveness, evidence of the tool leading to worse outcomes, or the tool causing significant operational problems or controversies.",
-              },
-              {
-                value: "item3",
-                text:
-                  "Yes, similar tools have been implemented in other local authorities, but with no evidence of success, evidence of the tool leading to poor outcomes, or the tool causing significant operational problems or controversies.",
-              },
-              {
-                value: "item1",
-                text:
-                  "No, as far as you are aware, this is a completely novel tool, with no other local authority deploying a similar tool before.",
-              },
-              {
-                value: "item4",
-                text:
-                  "You do not know if similar tools have been deployed by other local authorities in the past.",
-              },
-            ],
+            visibleIf: "{question1}=true",
           },
           {
-            type: "radiogroup",
+            type: "comment",
+            name: "question1_opt_comment",
+            title: "Please expand...",
+            visibleIf: "{question1}=true",
+          },
+          {
+            type: "boolean",
+            name: "question2",
+            title:
+              "Have similar tools been deployed by other local authorities in the past?",
+            isRequired: true,
+            visibleIf: "{question1}=false",
+          },
+          {
+            type: "comment",
+            name: "question2_comment",
+            title: "Please expand...",
+            visibleIf: "{question1}=false",
+          },
+          {
+            type: "boolean",
+            name: "question2_opt",
+            title: "Is there good evidence that those tools were effective?",
+            isRequired: true,
+            visibleIf: "{question2}=true",
+          },
+          {
+            type: "comment",
+            name: "question2_opt_comment",
+            title: "Please expand...",
+            visibleIf: "{question2}=true",
+          },
+          {
+            type: "boolean",
             name: "question4",
             title:
               "When similar tools have been deployed in the past, have they provoked any controversy, for example drawing criticism from the public, media, or civil society groups?",
             isRequired: true,
-            choices: [
-              {
-                value: "item1",
-                text:
-                  "No. There may have been interest from these groups, but not criticism or controversy.",
-              },
-              {
-                value: "item2",
-                text:
-                  "Yes, minor controversy that led to a small number of complaints and/or a small level of media attention.",
-              },
-              {
-                value: "item3",
-                text:
-                  "Yes, significant controversy that led to a large number of complaints and/or a high level of media attention.",
-              },
-              {
-                value: "item4",
-                text:
-                  "You do not know if previous deployments of such tools provoked controversy. ",
-              },
-            ],
+            visibleIf: "{question1}=true or {question2}=true",
           },
           {
-            type: "radiogroup",
-            name: "question5",
-            title:
-              "Do the intended users of the tool have experience using similar tools? If so, what was their experience of using those tools?",
-            isRequired: true,
-            choices: [
-              {
-                value: "item1",
-                text:
-                  "Yes, the intended users of the tool have previous experience and training using similar tools. There is evidence that the users had a positive experience using those tools.",
-              },
-              {
-                value: "item2",
-                text:
-                  "Yes, the intended users of the tool have previous experience and training using similar tools. However, there is insufficient evidence as to whether users had a positive experience using those tools, or there is evidence that users had a negative experience (e.g. from survey results).",
-              },
-              {
-                value: "item3",
-                text:
-                  "The intended users have no previous experience using similar tools.",
-              },
-              {
-                value: "item4",
-                text:
-                  "You do not know if the intended users have experience using similar tools.",
-              },
-            ],
+            type: "comment",
+            name: "question4_comment",
+            title: "Please expand...",
+            visibleIf: "{question1}=true or {question2}=true",
           },
         ],
         title: "Section 1: Novelty of the proposed solution",
+      },
+      {
+        title: "Section 2: Users of the tool",
+        name: "Users",
+        elements: [
+          {
+            type: "boolean",
+            name: "question5",
+            title:
+              "Do the intended users of the tool have experience using similar tools?",
+            isRequired: true,
+          },
+          {
+            type: "comment",
+            name: "question5_opt",
+            title: "Describe their experience of using those tools.",
+            visibleIf: "{question5}=true",
+          },
+        ],
       },
       {
         name: "Data and Tech",
