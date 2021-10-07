@@ -15,16 +15,33 @@ function computePreamble(surveyOutputData) {
       "Similar tools have not been deployed before in your local authority, but have been by other LAs."
     )
   }
-  if (!surveyOutputData["question1_2"] || !surveyOutputData["question2_2"]) {
-    bullets.push(
-      "Where similar tools have been previously deployed, there is not good evidence that they were effective."
-    )
+
+  if ("question1_2" in surveyOutputData) {
+    if (!surveyOutputData["question1_2"]) {
+      bullets.push(
+        "Where similar tools have been previously deployed, there is not good evidence that they were effective."
+      )
+    }
+    if (surveyOutputData["question1_2"]) {
+      bullets.push(
+        "Where similar tools have been previously deployed, there is good evidence that they were effective."
+      )
+    }
   }
-  if (surveyOutputData["question1_2"] || surveyOutputData["question2_2"]) {
-    bullets.push(
-      "Where similar tools have been previously deployed, there is good evidence that they were effective."
-    )
+
+  if ("question2_2" in surveyOutputData) {
+    if (!surveyOutputData["question2_2"]) {
+      bullets.push(
+        "Where similar tools have been previously deployed, there is not good evidence that they were effective."
+      )
+    }
+    if (surveyOutputData["question2_2"]) {
+      bullets.push(
+        "Where similar tools have been previously deployed, there is good evidence that they were effective."
+      )
+    }
   }
+
   if (surveyOutputData["question3"]) {
     bullets.push(
       "Where similar tools have been deployed previously, they have proved controversial, provoking criticism from the public, press, academics, or civil society groups."
@@ -37,12 +54,12 @@ function computePreamble(surveyOutputData) {
   }
   if (!surveyOutputData["question4"]) {
     bullets.push(
-      "The end user of the tool does not have experience using similar tools."
+      "The end users of the tool does not have experience using similar tools."
     )
   }
   if (surveyOutputData["question4"]) {
     bullets.push(
-      "The end user of the tool has a good level of experience of using similar tools."
+      "The end users of the tool has a good level of experience of using similar tools."
     )
   }
 
@@ -51,16 +68,17 @@ function computePreamble(surveyOutputData) {
     bullets.push("Previous tools have not been assessed for algorithmic bias.")
   }
 
-  if (surveyOutputData["question5"] && surveyOutputData["question5_1"]) {
-    bullets.push(
-      "There is evidence that the use of similar tools in the past has lead to adverse outcomes against specific groups."
-    )
-  }
-
-  if (surveyOutputData["question5"] && !surveyOutputData["question5_1"]) {
-    bullets.push(
-      "Previous tools have been assessed for algorithmic bias, and have been shown to not adversely impact certain groups."
-    )
+  if ("question5_1" in surveyOutputData) {
+    if (surveyOutputData["question5_1"]) {
+      bullets.push(
+        "There is evidence that the use of similar tools in the past has lead to adverse outcomes against specific groups."
+      )
+    }
+    if (!surveyOutputData["question5_1"]) {
+      bullets.push(
+        "Previous tools have been assessed for algorithmic bias, and have been shown to not adversely impact certain groups."
+      )
+    }
   }
 
   // If dataset unbalanced
@@ -81,13 +99,16 @@ function computePreamble(surveyOutputData) {
       "You do not have a good understanding of the quality of your data."
     )
   }
-  if (!surveyOutputData["question7_1"]) {
-    bullets.push("The quality of your data is poor.")
-  }
-  if (surveyOutputData["question7_1"]) {
-    bullets.push(
-      "An assessment of the quality of your data indicates that it is sufficient to build the proposed tool effectively."
-    )
+
+  if ("question7_1" in surveyOutputData) {
+    if (!surveyOutputData["question7_1"]) {
+      bullets.push("The quality of your data is poor.")
+    }
+    if (surveyOutputData["question7_1"]) {
+      bullets.push(
+        "An assessment of the quality of your data indicates that it is sufficient to build the proposed tool effectively."
+      )
+    }
   }
 
   // If using personal info about children/families
@@ -143,108 +164,152 @@ function computeData(surveyInputData, surveyOutputData) {
     bias: {
       key_theme: "Bias",
       explainer_link: "https://gov.uk/cdei/csc/bias",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     co_design: {
       key_theme: "Co-design",
       explainer_link: "https://gov.uk/cdei/csc/co-design",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     data_quality: {
       key_theme: "Data quality",
       explainer_link: "https://gov.uk/cdei/csc/data-quality",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     data_use: {
       key_theme: "Data use and sharing",
       explainer_link: "https://gov.uk/cdei/csc/data-use-and-sharing",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     evaluation: {
       key_theme: "Testing and evaluation",
       explainer_link: "https://gov.uk/cdei/csc/evaluation",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     governance: {
       key_theme: "Governance and oversight",
       explainer_link: "https://gov.uk/cdei/csc/governance-and-oversight",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     legal: {
       key_theme: "Legal",
       explainer_link: "https://gov.uk/cdei/csc/legal",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     procurement: {
       key_theme: "Procurement",
       explainer_link: "https://gov.uk/cdei/csc/procurement",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     public_engagement: {
       key_theme: "Public engagement",
       explainer_link: "https://gov.uk/cdei/csc/public-engagement",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
     training: {
       key_theme: "Training and upskilling",
       explainer_link: "https://gov.uk/cdei/csc/training-and-upskilling",
-      rationale: "TODO",
+      rationale: "",
+      flagged: false,
     },
+  }
+
+  function flagTheme(theme, rationale) {
+    var j = theme_map[theme]
+    j["flagged"] = true
+    if (j["rationale"] === "") {
+      j["rationale"] = rationale
+    } else {
+      j["rationale"] = j["rationale"] + " " + rationale
+    }
+    return j // probs don't need a return?
   }
 
   // Logic here for highlighting particular themes
 
   // Similar tools not deployed by any LA before - flag everything
   if (!surveyOutputData["question1"] && !surveyOutputData["question2"]) {
-    data_to_return.push(theme_map["bias"])
-    data_to_return.push(theme_map["co_design"])
-    data_to_return.push(theme_map["data_quality"])
-    data_to_return.push(theme_map["data_use"])
-    data_to_return.push(theme_map["evaluation"])
-    data_to_return.push(theme_map["governance"])
-    data_to_return.push(theme_map["legal"])
-    data_to_return.push(theme_map["procurement"])
-    data_to_return.push(theme_map["public_engagement"])
-    data_to_return.push(theme_map["training"])
+    flagTheme("bias", "Never deployed.")
+    flagTheme("co_design", "Never deployed.")
+    flagTheme("data_quality", "Never deployed.")
+    flagTheme("data_use", "Never deployed.")
+    flagTheme("evaluation", "Never deployed.")
+    flagTheme("governance", "Never deployed.")
+    flagTheme("legal", "Never deployed.")
+    flagTheme("procurement", "Never deployed.")
+    flagTheme("public_engagement", "Never deployed.")
+    flagTheme("training", "Never deployed.")
   }
 
   // Previously deployed tools not effective
-  if (!surveyOutputData["question1_2"] || !surveyOutputData["question2_2"]) {
-    data_to_return.push(theme_map["evaluation"])
+  if (!surveyOutputData["question1_2"]) {
+    flagTheme("evaluation", "Previous tools not effective.")
+  }
+
+  if ("question2_2" in surveyOutputData) {
+    if (!surveyOutputData["question2_2"]) {
+      if (!surveyOutputData["question1_2"]) {
+        flagTheme("evaluation", "Previous tools not effective.")
+      }
+    }
   }
 
   // Past controversy
   if (surveyOutputData["question3"]) {
-    data_to_return.push(theme_map["public_engagement"])
-    data_to_return.push(theme_map["governance"])
+    flagTheme("public_engagement", "Past controversy.")
+    flagTheme("governance", "Past controversy.")
   }
 
   // Users have no previous experience
   if (!surveyOutputData["question4"]) {
-    data_to_return.push(theme_map["co_design"])
-    data_to_return.push(theme_map["training"])
+    flagTheme("co_design", "Users have no experience.")
+    flagTheme("training", "Users have no experience.")
   }
 
   // Not assessed for bias, or assessed for bias with adverse outcomes
-  if (!surveyOutputData["question5"] || surveyOutputData["question5_1"]) {
-    data_to_return.push(theme_map["bias"])
+  if (!surveyOutputData["question5"]) {
+    flagTheme("bias", "No previous assessment for bias.")
+  }
+
+  if ("question5_1" in surveyOutputData) {
+    if (surveyOutputData["question5_1"]) {
+      flagTheme(
+        "bias",
+        "Previous tools shown to lead to adverse outcomes for certain groups."
+      )
+    }
   }
 
   // If dataset unbalanced
   if (surveyOutputData["question6"]) {
-    data_to_return.push(theme_map["bias"])
-    data_to_return.push(theme_map["data_quality"])
+    flagTheme("bias", "Dataset unbalanced.")
+    flagTheme("data_quality", "Dataset unbalanced.")
   }
 
   // If no knowledge of DQ, or DQ poor
-  if (!surveyOutputData["question7"] || !surveyOutputData["question7_1"]) {
-    data_to_return.push(theme_map["data_quality"])
+  if (!surveyOutputData["question7"]) {
+    flagTheme("data_quality", "No knowledge of data quality.")
+  }
+
+  if ("question7_1" in surveyOutputData) {
+    if (!surveyOutputData["question7_1"]) {
+      flagTheme("data_quality", "Data quality known to be poor.")
+    }
   }
 
   // If using personal info about children/families
   if (surveyOutputData["question8"]) {
-    data_to_return.push(theme_map["data_use"])
-    data_to_return.push(theme_map["legal"])
+    flagTheme("data_use", "Using personal information about children/families.")
+    flagTheme("legal", "Using personal information about children/families.")
   }
 
   // If children/families directly impacted
@@ -253,35 +318,119 @@ function computeData(surveyInputData, surveyOutputData) {
       surveyOutputData["question9"].includes("item1") ||
       surveyOutputData["question9"].includes("item2")
     ) {
-      data_to_return.push(theme_map["co_design"])
-      data_to_return.push(theme_map["public_engagement"])
+      flagTheme("co_design", "Children/families directly impacted.")
+      flagTheme("public_engagement", "Children/families directly impacted.")
     }
   }
 
   // If one of the high risk use cases
   if ("question10" in surveyOutputData) {
-    if (
-      surveyOutputData["question10"].includes("item1") ||
-      surveyOutputData["question10"].includes("item2")
-    ) {
-      data_to_return.push(theme_map["bias"])
-      data_to_return.push(theme_map["co_design"])
-      data_to_return.push(theme_map["data_quality"])
-      data_to_return.push(theme_map["data_use"])
-      data_to_return.push(theme_map["evaluation"])
-      data_to_return.push(theme_map["governance"])
-      data_to_return.push(theme_map["legal"])
-      data_to_return.push(theme_map["procurement"])
-      data_to_return.push(theme_map["public_engagement"])
-      data_to_return.push(theme_map["training"])
+    if (surveyOutputData["question10"].includes("item1")) {
+      flagTheme(
+        "bias",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "co_design",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "data_quality",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "data_use",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "evaluation",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "governance",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "legal",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "procurement",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "public_engagement",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "training",
+        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+    }
+    if (surveyOutputData["question10"].includes("item2")) {
+      flagTheme(
+        "bias",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "co_design",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "data_quality",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "data_use",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "evaluation",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "governance",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "legal",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "procurement",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "public_engagement",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
+      flagTheme(
+        "training",
+        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+      )
     }
   }
 
+  for (var key in theme_map) {
+    data_to_return.push(theme_map[key])
+  }
   return data_to_return
 }
 
 export default function Output(props) {
   const data = computeData(props.inputData, props.outputData)
+
+  function addTick(isFlagged) {
+    console.log(isFlagged)
+    if (isFlagged) {
+      return (
+        <span role="img" aria-label="tick">
+          &#x2705;
+        </span>
+      )
+    }
+    return ""
+  }
 
   const columns = React.useMemo(
     () => [
@@ -291,10 +440,16 @@ export default function Output(props) {
         disableFilters: true,
       },
       {
+        Header: "Flagged for particular attention?",
+        // accessor: "flagged",
+        Cell: ({ row }) => addTick(row.original.flagged),
+        disableFilters: true,
+      },
+      {
         Header: "Rationale",
         accessor: "rationale",
         disableFilters: true,
-        textAlign: "justify",
+        // textAlign: "justify",
       },
       {
         Header: "Link to explainer",
@@ -322,17 +477,21 @@ export default function Output(props) {
 
   return (
     <div>
-      Thank you for completing the triage process. Your answers are available in
-      full <a href="https://fake">here</a>. In summary:
+      <p>
+        Thank you for completing the triage process. Your answers are available
+        in full <a href="https://fake">here</a>. In summary:
+      </p>
       <ul>
         {computePreamble(props.outputData).map(x => {
           return <li>{x}</li>
         })}
       </ul>
-      The table below lists the key themes covered by the guidance. Certain
-      themes have been flagged for particular attention based on your answers to
-      the triage questions. A rationale is provided for why these themes have
-      been flagged.
+      <p>
+        The table below lists the key themes covered by the guidance. Certain
+        themes have been flagged for particular attention based on your answers
+        to the triage questions. A rationale is provided for why these themes
+        have been flagged.
+      </p>
       <div>
         <table {...getTableProps()}>
           <thead>
@@ -376,9 +535,37 @@ export default function Output(props) {
         </table>
         <div></div>
       </div>
-      Add something here about next steps: reconsidering the approach, DPIA,
-      reading the explainers, considering the additional questions in the
-      guidance.
+
+      <p>
+        Though the key themes that have been flagged may require particular
+        attention, it is important that all the themes above are appropriately
+        considered as you design, develop, test, and deploy your data analytics
+        tool. Additional optional questions/advice are given in subsequent
+        sections of the guidance for each theme, which you should consider if
+        the triage process has flagged that theme for particular attention.
+      </p>
+
+      <p>
+        Before proceeding to the next stage of the guidance you should:
+        <ul>
+          <li>
+            Record the results of the triage in Section X of the guidance
+            document.
+          </li>
+          <li>
+            Review your answers to the triage questions to understand if there
+            are particular aspects of your proposed solution which you may need
+            to reconsider, or establish mechanisms for appropriately mitigating
+            the risks or challenges they may pose.
+          </li>
+          <li>
+            For each key theme that has been flagged, read the corresponding
+            explainer document to ensure you have a good understanding of this
+            topic before you begin to design and develop the tool.
+          </li>
+        </ul>
+      </p>
+
       {/* <pre>
       {JSON.stringify(props.inputData, null, 3)}
       <br />
