@@ -9,7 +9,6 @@ export default class Sy extends React.Component {
     super(props)
     this.state = { isCompleted: false }
     this.onCompleteComponent = this.onCompleteComponent.bind(this)
-    this.tmp = ["one", "two", "three"]
     this.outputData = null
   }
 
