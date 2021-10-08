@@ -490,8 +490,15 @@ export default function Output(props) {
         The table below lists the key themes covered by the guidance. Certain
         themes have been flagged for particular attention based on your answers
         to the triage questions. A rationale is provided for why these themes
-        have been flagged.
+        have been flagged. Though the key themes that have been flagged may
+        require particular attention, it is important that all the themes above
+        are appropriately considered as you design, develop, test, and deploy
+        your data analytics tool. Additional optional questions/advice are given
+        in subsequent sections of the guidance for each theme, which you should
+        consider if the triage process has flagged that theme for particular
+        attention.
       </p>
+
       <div>
         <table {...getTableProps()}>
           <thead>
@@ -535,15 +542,6 @@ export default function Output(props) {
         </table>
         <div></div>
       </div>
-
-      <p>
-        Though the key themes that have been flagged may require particular
-        attention, it is important that all the themes above are appropriately
-        considered as you design, develop, test, and deploy your data analytics
-        tool. Additional optional questions/advice are given in subsequent
-        sections of the guidance for each theme, which you should consider if
-        the triage process has flagged that theme for particular attention.
-      </p>
 
       <p>
         Before proceeding to the next stage of the guidance you should:
