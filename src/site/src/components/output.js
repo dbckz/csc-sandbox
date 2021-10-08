@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useTable } from "react-table"
+import Collapse from "./collapse"
 
 function computePreamble(surveyOutputData) {
   const bullets = []
@@ -478,14 +479,17 @@ export default function Output(props) {
   return (
     <div>
       <p>
-        Thank you for completing the triage process. Your answers are available
-        in full <a href="https://fake">here</a>. In summary:
+        Thank you for completing the triage process. Here is a summary of your
+        responses:
       </p>
       <ul>
         {computePreamble(props.outputData).map(x => {
           return <li>{x}</li>
         })}
       </ul>
+      <Collapse label="Click to see your responses in full">
+        {JSON.stringify(props.outputData, null, 3)}
+      </Collapse>
       <p>
         The table below lists the key themes covered by the guidance. Certain
         themes have been flagged for particular attention based on your answers
