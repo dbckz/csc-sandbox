@@ -1,5 +1,6 @@
 import React from "react"
 import Output from "./output"
+import showdown from "showdown"
 import * as Survey from "survey-react"
 
 import "./sy.css"
@@ -9,6 +10,7 @@ export default class Sy2 extends React.Component {
     super(props)
     this.state = { isCompleted: false }
     this.onCompleteComponent = this.onCompleteComponent.bind(this)
+    this.onMarkdown = this.onMarkdown.bind(this)
     this.inputData = null
     this.outputData = null
   }
@@ -17,6 +19,17 @@ export default class Sy2 extends React.Component {
     this.outputData = result.data
     this.inputData = this.json
     this.setState({ isCompleted: true })
+  }
+
+  converter = new showdown.Converter()
+
+  onMarkdown(survey, options) {
+    var str = this.converter.makeHtml(options.text)
+    //remove root paragraphs <p></p>
+    str = str.substring(3)
+    str = str.substring(0, str.length - 4)
+    //set html
+    options.html = str
   }
 
   json = {
@@ -30,20 +43,20 @@ export default class Sy2 extends React.Component {
             type: "boolean",
             name: "question1",
             title:
-              "Does your local authority have previous experience of deploying similar tools in the past?",
+              "Does your local authority have experience of deploying tools using this type of data analytics in the past?",
             isRequired: true,
           },
           {
             type: "comment",
             name: "question1_1",
             title:
-              "Please provide details of similar tools previously deployed by the local authority.",
+              'Provide details of those tools. Consider:<br /><ul style="padding-left:50px"}><li>When were they developed and deployed?</li><li>What problem did they aim to address?</li><li>Who were the end users of the tools?</li></ul>',
             visibleIf: "{question1}=true",
           },
           {
             type: "boolean",
             name: "question1_2",
-            title: "Is there good evidence that those tools were effective?",
+            title: "Is there good evidence the tools were effective?",
             isRequired: true,
             visibleIf: "{question1}=true",
           },
@@ -51,14 +64,14 @@ export default class Sy2 extends React.Component {
             type: "comment",
             name: "question1_3",
             title:
-              "Please describe what evidence there is for effectiveness of previously deployed tools.",
+              'Describe what evidence there is for or against the effectiveness of previously deployed tools. Consider:<br /><ul style="padding-left:50px"}><li>Were the tools accurate?</li><li>Did they improve outcomes for children and families?</li><li>What testing and evaluation were they subject to?</li><li>What were the results of testing?</li></ul>',
             visibleIf: "{question1}=true",
           },
           {
             type: "boolean",
             name: "question2",
             title:
-              "Have similar tools been deployed by other local authorities in the past?",
+              "Are you aware of other local authorities that have used this type of data analytics to tackle the problem you have prioritised?",
             isRequired: true,
             visibleIf: "{question1}=false",
           },
@@ -66,13 +79,13 @@ export default class Sy2 extends React.Component {
             type: "comment",
             name: "question2_1",
             title:
-              "Please provide any details of similar tools previously deployed by other local authorities.",
+              'Provide details of such tools deployed by other local authorities. Consider:<br /><ul style="padding-left:50px"}><li>When were they developed and deployed?</li><li>What problem did they aim to address?</li><li>Who were the end users of the tools?</li></ul>',
             visibleIf: "{question2}=true",
           },
           {
             type: "boolean",
             name: "question2_2",
-            title: "Is there good evidence that those tools were effective?",
+            title: "Is there good evidence the tools were effective?",
             isRequired: true,
             visibleIf: "{question2}=true",
           },
@@ -80,7 +93,7 @@ export default class Sy2 extends React.Component {
             type: "comment",
             name: "question2_3",
             title:
-              "Please describe what evidence you are aware of for the effectiveness of similar tools deployed by other local authorities.",
+              'Describe what evidence you are aware of for or against the effectiveness of those tools deployed by other local authorities. Consider:<br /><ul style="padding-left:50px"}><li>Were the tools accurate?</li><li>Did they improve outcomes for children and families?</li><li>What testing and evaluation were they subject to?</li><li>What were the results of testing?</li></ul>',
             visibleIf: "{question2}=true",
           },
           {
@@ -94,7 +107,8 @@ export default class Sy2 extends React.Component {
           {
             type: "comment",
             name: "question3_1",
-            title: "Please provide details of any past controversies.",
+            title:
+              'Provide details of any past controversies. Consider:<br /><ul style="padding-left:50px"}><li>What about the tool and its use made it particularly controversial?</li><li>What could you have done differently to avoid or mitigate these controversies?</li></ul>',
             visibleIf: "{question1}=true or {question2}=true",
           },
         ],
@@ -114,19 +128,20 @@ export default class Sy2 extends React.Component {
           {
             type: "comment",
             name: "question4_1",
-            title: "Describe their experience of using those tools.",
+            title:
+              'Describe their experience of using those tools. Consider:<br /><ul style="padding-left:50px"}><li>Was there broad uptake and use of these tools amongst their intended users?</li><li>What did users like about using the tools?</li><li>What did users find frustrating about using the tools?</li><li>Are those tools still being used today? If not, why not?</li></ul>',
             visibleIf: "{question4}=true",
           },
         ],
       },
       {
-        name: "Data and Tech",
+        name: "Data",
         elements: [
           {
             type: "boolean",
             name: "question5",
             title:
-              "Where similar tools have been deployed in the past, were they assessed for algorithmic bias?",
+              "Where tools using this type of data analytics to tackle the problem you have prioritised have been deployed in the past, were they assessed for algorithmic bias?",
             isRequired: true,
           },
           {
@@ -141,8 +156,14 @@ export default class Sy2 extends React.Component {
             type: "comment",
             name: "question5_2",
             title:
-              "Please provide any details of these assessments for bias, including...",
+              'Describe any details of these assessments for bias. Consider:<br /><ul style="padding-left:50px"}><li>What tests were carried out to evaluate algorithmic bias?</li><li>What groups were adversely impacted by the tool?</li><li>Were any interventions made to mitigate bias? Were they effective?</li></ul>',
             visibleIf: "{question5}=true",
+          },
+          {
+            type: "comment",
+            name: "question5_3",
+            title:
+              "Provide details of any complaints or controversies reported in the media that related to previously deployed tools causing bias or discriminatory outcomes.",
           },
           {
             type: "boolean",
@@ -202,13 +223,18 @@ export default class Sy2 extends React.Component {
                 text: "All children or families in the local authority.",
               },
               {
+                value: "item4",
+                text:
+                  "Children and families who receive support from the local authority, e.g. Supporting Families, free school meals, housing.",
+              },
+              {
                 value: "item3",
                 text: "Children or families who are in the care system.",
               },
             ],
           },
         ],
-        title: "Section 3: Data and technology for the proposed solution",
+        title: "Section 3: Use of data in the proposed solution",
       },
       {
         name: "Impact",
@@ -271,6 +297,7 @@ export default class Sy2 extends React.Component {
         json={this.json}
         showCompletedPage={false}
         onComplete={this.onCompleteComponent}
+        onTextMarkdown={this.onMarkdown}
       />
     ) : null
 
