@@ -646,11 +646,11 @@ export default function Output(props) {
         </ul>
       </p>
 
-      <pre>
+      {/* <pre>
         {JSON.stringify(props.inputData, null, 3)}
         <br />
         {JSON.stringify(props.outputData, null, 3)}
-      </pre>
+      </pre> */}
     </div>
   )
 }
