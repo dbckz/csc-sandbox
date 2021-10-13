@@ -2,6 +2,75 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useTable } from "react-table"
 import Collapse from "./collapse"
+import ReactHtmlParser from "react-html-parser"
+
+function computeFullResults(surveyInputData, surveyOutputData) {
+  var qaList = []
+  var questions = {}
+  for (var page in surveyInputData["pages"]) {
+    // This can definitely be written more straightforwardly...
+    for (var el in surveyInputData["pages"][page]["elements"]) {
+      questions[surveyInputData["pages"][page]["elements"][el]["name"]] =
+        surveyInputData["pages"][page]["elements"][el]
+    }
+  }
+
+  var questionList = Object.keys(questions)
+
+  for (var q in questionList) {
+    if (
+      questionList[q] in surveyOutputData &&
+      surveyOutputData[questionList[q]] !== ""
+    ) {
+      if (questionList[q] === "question8_1") {
+        var item = surveyOutputData[questionList[q]]
+        var choices = questions["question8_1"]["choices"]
+        var answer = ""
+        for (var choice in choices) {
+          if (choices[choice]["value"] === item) {
+            answer = choices[choice]["text"]
+          }
+        }
+
+        qaList.push({
+          q: questions[questionList[q]]["title"],
+          a: answer,
+        })
+      } else if (
+        questionList[q] === "question9" ||
+        questionList[q] === "question10"
+      ) {
+        var items = surveyOutputData[questionList[q]]
+        choices = questions[questionList[q]]["choices"]
+        answer = ""
+        for (choice in choices) {
+          for (item in items) {
+            if (choices[choice]["value"] === items[item]) {
+              answer = answer + " " + choices[choice]["text"]
+            }
+          }
+        }
+
+        qaList.push({
+          q: questions[questionList[q]]["title"],
+          a: answer,
+        })
+      } else {
+        qaList.push({
+          q: questions[questionList[q]]["title"],
+          a:
+            typeof surveyOutputData[questionList[q]] === "boolean"
+              ? surveyOutputData[questionList[q]] === true
+                ? "Yes"
+                : "No"
+              : surveyOutputData[questionList[q]].toString(),
+        })
+      }
+    }
+  }
+
+  return qaList
+}
 
 function computePreamble(surveyOutputData) {
   const bullets = []
@@ -422,7 +491,6 @@ export default function Output(props) {
   const data = computeData(props.inputData, props.outputData)
 
   function addTick(isFlagged) {
-    console.log(isFlagged)
     if (isFlagged) {
       return (
         <span role="img" aria-label="tick">
@@ -488,7 +556,17 @@ export default function Output(props) {
         })}
       </ul>
       <Collapse label="Click to see your responses in full">
-        {JSON.stringify(props.outputData, null, 3)}
+        {/* {JSON.stringify(props.outputData, null, 3)} */}
+        <ol>
+          {computeFullResults(props.inputData, props.outputData).map(x => {
+            return (
+              <li>
+                <p>{ReactHtmlParser(x["q"])}</p>
+                <p>{x["a"]}</p>
+              </li>
+            )
+          })}
+        </ol>
       </Collapse>
       <p>
         The table below lists the key themes covered by the guidance. Certain
@@ -568,11 +646,11 @@ export default function Output(props) {
         </ul>
       </p>
 
-      {/* <pre>
-      {JSON.stringify(props.inputData, null, 3)}
-      <br />
-      {JSON.stringify(props.outputData, null, 3)}
-    </pre> */}
+      <pre>
+        {JSON.stringify(props.inputData, null, 3)}
+        <br />
+        {JSON.stringify(props.outputData, null, 3)}
+      </pre>
     </div>
   )
 }

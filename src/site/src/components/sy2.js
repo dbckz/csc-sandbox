@@ -272,12 +272,12 @@ export default class Sy2 extends React.Component {
             choices: [
               {
                 value: "item1",
-                text: "Fully automated decision-making",
+                text: "Fully automated decision-making.",
               },
               {
                 value: "item2",
                 text:
-                  "Making predictions about, or assigning a risk-score to, individual children or families",
+                  "Making predictions about, or assigning a risk-score to, individual children or families.",
               },
             ],
           },
