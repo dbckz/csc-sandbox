@@ -100,7 +100,7 @@ export default class Sy2 extends React.Component {
             type: "boolean",
             name: "question3",
             title:
-              "When similar tools have been deployed in the past, have they provoked any controversy, for example drawing criticism from the public, media, or civil society groups?",
+              "When similar tools have been deployed in the past, have they provoked controversy? This could have been externally, drawing criticism from the public, media, civil society groups, or indepdent researchers; or internally, drawing criticism from social workers, information governance teams, or senior management.",
             isRequired: true,
             visibleIf: "{question1}=true or {question2}=true",
           },
@@ -108,7 +108,7 @@ export default class Sy2 extends React.Component {
             type: "comment",
             name: "question3_1",
             title:
-              'Provide details of any past controversies. Consider:<br /><ul style="padding-left:50px"}><li>What about the tool and its use made it particularly controversial?</li><li>What could you have done differently to avoid or mitigate these controversies?</li></ul>',
+              'Provide details of any past controversies. Consider:<br /><ul style="padding-left:50px"}><li>What about the tool and its use made it particularly controversial?</li><li>What could have been done differently to avoid or mitigate these controversies?</li></ul>',
             visibleIf: "{question1}=true or {question2}=true",
           },
         ],
@@ -137,48 +137,6 @@ export default class Sy2 extends React.Component {
       {
         name: "Data",
         elements: [
-          {
-            type: "boolean",
-            name: "question5",
-            title:
-              "Where tools using this type of data analytics to tackle the problem you have prioritised have been deployed in the past, were they assessed for algorithmic bias?",
-            isRequired: true,
-          },
-          {
-            type: "boolean",
-            name: "question5_1",
-            title:
-              "Did such an assessment indicate use of the tool adversely impacted or discriminated against certain groups?",
-            isRequired: true,
-            visibleIf: "{question5}=true",
-          },
-          {
-            type: "comment",
-            name: "question5_2",
-            title:
-              'Describe any details of these assessments for bias. Consider:<br /><ul style="padding-left:50px"}><li>What tests were carried out to evaluate algorithmic bias?</li><li>What groups were adversely impacted by the tool?</li><li>Were any interventions made to mitigate bias? Were they effective?</li></ul>',
-            visibleIf: "{question5}=true",
-          },
-          {
-            type: "comment",
-            name: "question5_3",
-            title:
-              "Provide details of any complaints or controversies reported in the media that related to previously deployed tools causing bias or discriminatory outcomes.",
-          },
-          {
-            type: "boolean",
-            name: "question6",
-            title:
-              "Is it likely that certain groups would be over- or under-represented in the data used to develop the tool? For example, are there historical trends or practices that mean certain demographic groups are absent from the dataset, or, conversely, make up the majority of individuals in the dataset? You should also consider whether there are variables in the dataset that could be used as proxies for protected characteristics.",
-            isRequired: true,
-          },
-          {
-            type: "comment",
-            name: "question6_1",
-            title:
-              "Please describe this over- or under-representation, and record any plans you have to create a more balanced dataset.",
-            visibleIf: "{question6}=true",
-          },
           {
             type: "boolean",
             name: "question7",
@@ -232,6 +190,48 @@ export default class Sy2 extends React.Component {
                 text: "Children or families who are in the care system.",
               },
             ],
+          },
+          {
+            type: "boolean",
+            name: "question5",
+            title:
+              "Where tools using this type of data analytics to tackle the problem you have prioritised have been deployed in the past, were they assessed for algorithmic bias?",
+            isRequired: true,
+          },
+          {
+            type: "boolean",
+            name: "question5_1",
+            title:
+              "Did such an assessment indicate use of the tool adversely impacted or discriminated against certain groups?",
+            isRequired: true,
+            visibleIf: "{question5}=true",
+          },
+          {
+            type: "comment",
+            name: "question5_2",
+            title:
+              'Describe any details of these assessments for bias. Consider:<br /><ul style="padding-left:50px"}><li>What tests were carried out to evaluate algorithmic bias?</li><li>What groups were adversely impacted by the tool?</li><li>Were any interventions made to mitigate bias? Were they effective?</li></ul>',
+            visibleIf: "{question5}=true",
+          },
+          {
+            type: "comment",
+            name: "question5_3",
+            title:
+              "Provide details of any complaints or controversies reported in the media that related to previously deployed tools causing bias or discriminatory outcomes.",
+          },
+          {
+            type: "boolean",
+            name: "question6",
+            title:
+              "Is it likely that certain groups would be over- or under-represented in the data used to develop the tool? For example, are there historical trends or practices that mean certain demographic groups are absent from the dataset, or, conversely, make up the majority of individuals in the dataset? You should also consider whether there are variables in the dataset that could be used as proxies for protected characteristics.",
+            isRequired: true,
+          },
+          {
+            type: "comment",
+            name: "question6_1",
+            title:
+              "Please describe this over- or under-representation, and record any plans you have to create a more balanced dataset.",
+            visibleIf: "{question6}=true",
           },
         ],
         title: "Section 3: Use of data in the proposed solution",
