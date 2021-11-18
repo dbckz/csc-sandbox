@@ -36,6 +36,20 @@ function computeFullResults(surveyInputData, surveyOutputData) {
           q: questions[questionList[q]]["title"],
           a: answer,
         })
+      } else if (questionList[q] === "question0") {
+        var item2 = surveyOutputData[questionList[q]]
+        var choices2 = questions["question0"]["choices"]
+        var answer2 = ""
+        for (var choice2 in choices2) {
+          if (choices2[choice2]["value"] === item2) {
+            answer2 = choices2[choice2]["text"]
+          }
+        }
+
+        qaList.push({
+          q: questions[questionList[q]]["title"],
+          a: answer2,
+        })
       } else if (
         questionList[q] === "question9" ||
         questionList[q] === "question10"
@@ -152,16 +166,16 @@ function computePreamble(surveyOutputData) {
   }
 
   // If dataset unbalanced
-  if (surveyOutputData["question6"]) {
-    bullets.push(
-      "It is likely that the dataset is unbalanced, with certain groups over- or under-represented."
-    )
-  }
-  if (!surveyOutputData["question6"]) {
-    bullets.push(
-      "You believe the datasets being used are well-balanced, being representative of the population under consideration."
-    )
-  }
+  // if (surveyOutputData["question6"]) {
+  //   bullets.push(
+  //     "It is likely that the dataset is unbalanced, with certain groups over- or under-represented."
+  //   )
+  // }
+  // if (!surveyOutputData["question6"]) {
+  //   bullets.push(
+  //     "You believe the datasets being used are well-balanced, being representative of the population under consideration."
+  //   )
+  // }
 
   // If no knowledge of DQ, or DQ poor
   if (!surveyOutputData["question7"]) {
@@ -215,11 +229,13 @@ function computePreamble(surveyOutputData) {
   // If one of the high risk use cases
   if ("question10" in surveyOutputData) {
     if (surveyOutputData["question10"].includes("item1")) {
-      bullets.push("The tool will perform fully-automated decision-making.")
+      bullets.push(
+        "Tool makes decisions with little opportunity for professional oversight."
+      )
     }
     if (surveyOutputData["question10"].includes("item2")) {
       bullets.push(
-        "The tool will make predictions about, or assign a risk-score to, individual children or families."
+        "The tool will make predictions about individual children or families."
       )
     }
   }
@@ -360,10 +376,10 @@ function computeData(surveyInputData, surveyOutputData) {
   }
 
   // If dataset unbalanced
-  if (surveyOutputData["question6"]) {
-    flagTheme("bias", "Dataset unbalanced.")
-    flagTheme("data_quality", "Dataset unbalanced.")
-  }
+  // if (surveyOutputData["question6"]) {
+  //   flagTheme("bias", "Dataset unbalanced.")
+  //   flagTheme("data_quality", "Dataset unbalanced.")
+  // }
 
   // If no knowledge of DQ, or DQ poor
   if (!surveyOutputData["question7"]) {
@@ -398,85 +414,85 @@ function computeData(surveyInputData, surveyOutputData) {
     if (surveyOutputData["question10"].includes("item1")) {
       flagTheme(
         "bias",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "co_design",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "data_quality",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "data_use",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "evaluation",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "governance",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "legal",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "procurement",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "public_engagement",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "training",
-        "Tool performs fully automated decision-making - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
     }
     if (surveyOutputData["question10"].includes("item2")) {
       flagTheme(
         "bias",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "co_design",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "data_quality",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "data_use",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "evaluation",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "governance",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "legal",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "procurement",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "public_engagement",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
       flagTheme(
         "training",
-        "Tool risk-scores individual children or families - this is a particularly high risk use case, so warrants a rigorous approach to considering ethics."
+        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
     }
   }

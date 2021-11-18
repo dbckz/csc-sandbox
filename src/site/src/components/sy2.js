@@ -40,6 +40,30 @@ export default class Sy2 extends React.Component {
         name: "Novelty",
         elements: [
           {
+            type: "radiogroup",
+            name: "question0",
+            title:
+              "Which type of data analytics best matches your proposed analytics tool?",
+            isRequired: true,
+            choices: [
+              {
+                value: "item1",
+                text:
+                  "Descriptive analytics to help understand what has happened",
+              },
+              {
+                value: "item2",
+                text:
+                  "Diagnostic analytics to help understand why things are happening",
+              },
+              {
+                value: "item3",
+                text:
+                  "Predictive analytics to help estimate what is likely to happen",
+              },
+            ],
+          },
+          {
             type: "boolean",
             name: "question1",
             title:
@@ -64,7 +88,7 @@ export default class Sy2 extends React.Component {
             type: "comment",
             name: "question1_3",
             title:
-              'Describe what evidence there is for or against the effectiveness of previously deployed tools. Consider:<br /><ul style="padding-left:50px"}><li>Were the tools accurate?</li><li>Did they improve outcomes for children and families?</li><li>What testing and evaluation were they subject to?</li><li>What were the results of testing?</li></ul>',
+              'Describe what evidence there is for or against the effectiveness of previously deployed tools. Consider:<br /><ul style="padding-left:50px"}><li>Were the tools accurate?</li><li>How did they improve outcomes for children and families?</li><li>What testing and evaluation were they subject to?</li><li>What were the results of testing?</li></ul>',
             visibleIf: "{question1}=true",
           },
           {
@@ -183,11 +207,17 @@ export default class Sy2 extends React.Component {
               {
                 value: "item4",
                 text:
-                  "Children and families who receive support from the local authority, e.g. Supporting Families, free school meals, housing.",
+                  "Children and families in your geographical area (e.g. South West England) for whom data indicates they may be vulnerable (e.g. receive Free School Meals, rent arrears, receive support under the Supporting Families programme)",
+              },
+              {
+                value: "item5",
+                text:
+                  "Children and families in your local authority area for whom data indicates they may be vulnerable.",
               },
               {
                 value: "item3",
-                text: "Children or families who are in the care system.",
+                text:
+                  "Children or families who are being supported by a social worker.",
               },
             ],
           },
@@ -195,7 +225,7 @@ export default class Sy2 extends React.Component {
             type: "boolean",
             name: "question5",
             title:
-              "Where tools using this type of data analytics to tackle the problem you have prioritised have been deployed in the past, were they assessed for algorithmic bias?",
+              "Where tools using this type of data analytics to tackle the problem you have prioritised have been deployed in the past, were they assessed for algorithmic bias? i.e. was the effectiveness or performance of the tools assessed and compared for different demographic groups?",
             isRequired: true,
           },
           {
@@ -219,20 +249,20 @@ export default class Sy2 extends React.Component {
             title:
               "Provide details of any complaints or controversies reported in the media that related to previously deployed tools causing bias or discriminatory outcomes.",
           },
-          {
-            type: "boolean",
-            name: "question6",
-            title:
-              "Is it likely that certain groups would be over- or under-represented in the data used to develop the tool? For example, are there historical trends or practices that mean certain demographic groups are absent from the dataset, or, conversely, make up the majority of individuals in the dataset? You should also consider whether there are variables in the dataset that could be used as proxies for protected characteristics.",
-            isRequired: true,
-          },
-          {
-            type: "comment",
-            name: "question6_1",
-            title:
-              "Please describe this over- or under-representation, and record any plans you have to create a more balanced dataset.",
-            visibleIf: "{question6}=true",
-          },
+          // {
+          //   type: "boolean",
+          //   name: "question6",
+          //   title:
+          //     "Is it likely that certain groups would be over- or under-represented in the data used to develop the tool? For example, are there historical trends or practices that mean certain demographic groups are absent from the dataset, or, conversely, make up the majority of individuals in the dataset? You should also consider whether there are variables in the dataset that could be used as proxies for protected characteristics.",
+          //   isRequired: true,
+          // },
+          // {
+          //   type: "comment",
+          //   name: "question6_1",
+          //   title:
+          //     "Please describe this over- or under-representation, and record any plans you have to create a more balanced dataset.",
+          //   visibleIf: "{question6}=true",
+          // },
         ],
         title: "Section 3: Use of data in the proposed solution",
       },
@@ -247,7 +277,8 @@ export default class Sy2 extends React.Component {
             choices: [
               {
                 value: "item1",
-                text: "Children or families in the local authority.",
+                text:
+                  "Children or families in the local authority or surrounding geographical area.",
               },
               {
                 value: "item2",
@@ -268,16 +299,18 @@ export default class Sy2 extends React.Component {
           {
             type: "checkbox",
             name: "question10",
-            title: "Does your proposed use case include any of the following?",
+            title:
+              "Does your proposed analytics tool include any of the following?",
             choices: [
               {
                 value: "item1",
-                text: "Fully automated decision-making.",
+                text:
+                  "A tool that provides little opportunity for a practitioner or user to reach their own conclusion. For example, a tool which automatically refers children for assessment, without a professional considering the evidence.",
               },
               {
                 value: "item2",
                 text:
-                  "Making predictions about, or assigning a risk-score to, individual children or families.",
+                  "A tool which makes predictions related to individual children or families.",
               },
             ],
           },
