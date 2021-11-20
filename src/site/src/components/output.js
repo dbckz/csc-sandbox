@@ -644,10 +644,7 @@ export default function Output(props) {
       <p>
         Before proceeding to the next stage of the guidance you should:
         <ul>
-          <li>
-            Record the results of the triage in Section X of the guidance
-            document.
-          </li>
+          <li>Record the results of the triage.</li>
           <li>
             Review your answers to the triage questions to understand if there
             are particular aspects of your proposed solution which you may need
