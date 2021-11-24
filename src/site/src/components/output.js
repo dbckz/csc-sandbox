@@ -301,12 +301,6 @@ function computeData(surveyInputData, surveyOutputData) {
       rationale: "",
       flagged: false,
     },
-    training: {
-      key_theme: "Training and upskilling",
-      explainer_link: "https://gov.uk/cdei/csc/training-and-upskilling",
-      rationale: "",
-      flagged: false,
-    },
   }
 
   function flagTheme(theme, rationale) {
@@ -333,7 +327,6 @@ function computeData(surveyInputData, surveyOutputData) {
     flagTheme("legal", "Never deployed.")
     flagTheme("procurement", "Never deployed.")
     flagTheme("public_engagement", "Never deployed.")
-    flagTheme("training", "Never deployed.")
   }
 
   // Previously deployed tools not effective
@@ -358,7 +351,6 @@ function computeData(surveyInputData, surveyOutputData) {
   // Users have no previous experience
   if (!surveyOutputData["question4"]) {
     flagTheme("co_design", "Users have no experience.")
-    flagTheme("training", "Users have no experience.")
   }
 
   // Not assessed for bias, or assessed for bias with adverse outcomes
@@ -448,10 +440,6 @@ function computeData(surveyInputData, surveyOutputData) {
         "public_engagement",
         "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
-      flagTheme(
-        "training",
-        "Tool makes decisions with little opportunity for professional oversight - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
-      )
     }
     if (surveyOutputData["question10"].includes("item2")) {
       flagTheme(
@@ -488,10 +476,6 @@ function computeData(surveyInputData, surveyOutputData) {
       )
       flagTheme(
         "public_engagement",
-        "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
-      )
-      flagTheme(
-        "training",
         "Tool makes predicts about individual children or families - this may be particularly risky, so warrants a rigorous approach to ethics and governance."
       )
     }
