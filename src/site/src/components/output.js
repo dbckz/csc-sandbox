@@ -248,8 +248,8 @@ function computeData(surveyInputData, surveyOutputData) {
 
   const theme_map = {
     bias: {
-      key_theme: "Bias",
-      explainer_link: "https://gov.uk/cdei/csc/bias",
+      key_theme: "Mitigating bias",
+      explainer_link: "https://gov.uk/cdei/csc/mitigating-bias",
       rationale: "",
       flagged: false,
     },
@@ -296,8 +296,8 @@ function computeData(surveyInputData, surveyOutputData) {
       flagged: false,
     },
     public_engagement: {
-      key_theme: "Public engagement",
-      explainer_link: "https://gov.uk/cdei/csc/public-engagement",
+      key_theme: "Public communications",
+      explainer_link: "https://gov.uk/cdei/csc/public-communications",
       rationale: "",
       flagged: false,
     },
